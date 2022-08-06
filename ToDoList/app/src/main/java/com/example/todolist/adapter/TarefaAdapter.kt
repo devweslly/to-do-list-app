@@ -8,7 +8,7 @@ import com.example.todolist.model.Tarefa
 
 class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
 
-    var listTarefa = emptyList<Tarefa>()
+    private var listTarefa = emptyList<Tarefa>()
 
     class TarefaViewHolder(val binding: CardLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 

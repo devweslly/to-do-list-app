@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todolist.adapter.TarefaAdapter
 import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.model.Tarefa
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,6 +52,14 @@ class ListFragment : Fragment() {
 
             )
         )
+
+        // Configuração do RecyclerView
+        val adapter = TarefaAdapter()
+        binding.recyclerTarefa.layoutManager = LinearLayoutManager(context)
+        binding.recyclerTarefa.adapter = adapter
+        binding.recyclerTarefa.setHasFixedSize(true)
+
+        adapter.setList(listTarefa)
 
         binding.floatingAdd.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_formFragment)
