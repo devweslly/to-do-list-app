@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,12 +17,21 @@ class MainViewModel : ViewModel() {
     private val _myCategoriaResponse =
         MutableLiveData<Response<List<Categoria>>>()
 
-    val myCategoriaResponse : LiveData<Response<List<Categoria>>> =
+    val myCategoriaResponse: LiveData<Response<List<Categoria>>> =
         _myCategoriaResponse
 
-    fun listCategoria(){
+    init {
+        listCategoria()
+    }
+
+    fun listCategoria() {
         viewModelScope.launch {
-            _myCategoriaResponse.value = repository.listCategoria()
+            try {
+                val response = repository.listCategoria()
+                _myCategoriaResponse.value = response
+            } catch (e: Exception) {
+                Log.d("Erro", e.message.toString())
+            }
         }
     }
 }
