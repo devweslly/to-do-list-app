@@ -31,7 +31,7 @@ class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
         holder.binding.textResponsavel.text = tarefa.responsavel
         holder.binding.textData.text = tarefa.data
         holder.binding.switchAtivo.isChecked = tarefa.status
-        holder.binding.textCategoria.text = tarefa.nome
+        holder.binding.textCategoria.text = tarefa.categoria.descricao
     }
 
     // Retorna a quantidade de vezes que precisa gerar os itens
