@@ -10,9 +10,9 @@ import com.example.todolist.model.Categoria
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
-
-    val repository = Repository()
+class MainViewModel (
+    private val repository: Repository
+        ) : ViewModel() {
 
     private val _myCategoriaResponse =
         MutableLiveData<Response<List<Categoria>>>()
