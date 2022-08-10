@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
         _myCategoriaResponse
 
     init {
-        listCategoria()
+        //listCategoria()
     }
 
     fun listCategoria() {

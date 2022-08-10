@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todolist.databinding.FragmentFormBinding
 import com.example.todolist.databinding.FragmentListBinding
+import com.example.todolist.model.Categoria
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FormFragment : Fragment() {
@@ -25,8 +27,11 @@ class FormFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentFormBinding.inflate(layoutInflater, container, false)
 
+        mainViewModel.listCategoria()
+
         mainViewModel.myCategoriaResponse.observe(viewLifecycleOwner){
-            Log.d("Requisicao", it.body().toString())
+            response -> Log.d("Requisicao", response.body().toString())
+            spinnerCategoria(response.body())
         }
 
         binding.buttonSalvar.setOnClickListener {
@@ -34,5 +39,16 @@ class FormFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun spinnerCategoria(listCategoria: List<Categoria>?){
+        if (listCategoria != null){
+            binding.spinnerCategoria.adapter =
+                ArrayAdapter(
+                    requireContext(),
+                    androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                    listCategoria
+                )
+        }
     }
 }
