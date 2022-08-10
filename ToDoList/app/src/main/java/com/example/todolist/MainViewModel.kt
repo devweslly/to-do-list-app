@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.api.Repository
 import com.example.todolist.model.Categoria
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class MainViewModel (
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: Repository
         ) : ViewModel() {
 
