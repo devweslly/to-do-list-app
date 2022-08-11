@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.api.Repository
 import com.example.todolist.model.Categoria
+import com.example.todolist.model.Tarefa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,6 +38,16 @@ class MainViewModel @Inject constructor(
                 val response = repository.listCategoria()
                 _myCategoriaResponse.value = response
             } catch (e: Exception) {
+                    Log.d("Erro", e.message.toString())
+            }
+        }
+    }
+
+    fun addTarefa(tarefa: Tarefa){
+        viewModelScope.launch {
+            try {
+                repository.addTarefa(tarefa)
+            }catch (e: Exception){
                 Log.d("Erro", e.message.toString())
             }
         }

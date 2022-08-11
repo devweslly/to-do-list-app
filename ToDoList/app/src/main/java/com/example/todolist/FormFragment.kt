@@ -57,7 +57,7 @@ class FormFragment : Fragment(), TimerPickerListener {
         return binding.root
     }
 
-    fun spinnerCategoria(listCategoria: List<Categoria>?) {
+    private fun spinnerCategoria(listCategoria: List<Categoria>?) {
         if (listCategoria != null) {
             binding.spinnerCategoria.adapter =
                 ArrayAdapter(
