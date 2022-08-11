@@ -12,11 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todolist.databinding.FragmentFormBinding
 import com.example.todolist.databinding.FragmentListBinding
+import com.example.todolist.fragmet.DatePickerFragment
+import com.example.todolist.fragmet.TimerPickerListener
 import com.example.todolist.model.Categoria
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
 
-class FormFragment : Fragment() {
+class FormFragment : Fragment(), TimerPickerListener {
 
     private lateinit var binding: FragmentFormBinding
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -32,24 +34,29 @@ class FormFragment : Fragment() {
 
         mainViewModel.dataSelecionada.value = LocalDate.now()
 
-        mainViewModel.myCategoriaResponse.observe(viewLifecycleOwner){
-            response -> Log.d("Requisicao", response.body().toString())
+        mainViewModel.myCategoriaResponse.observe(viewLifecycleOwner) { response ->
+            Log.d("Requisicao", response.body().toString())
             spinnerCategoria(response.body())
         }
 
-        mainViewModel.dataSelecionada.observe(viewLifecycleOwner){
-            selectedDate -> binding.editData.setText(selectedDate.toString())
+        mainViewModel.dataSelecionada.observe(viewLifecycleOwner) { selectedDate ->
+            binding.editData.setText(selectedDate.toString())
         }
 
         binding.buttonSalvar.setOnClickListener {
             findNavController().navigate(R.id.action_formFragment_to_listFragment)
         }
 
+        binding.editData.setOnClickListener {
+            DatePickerFragment(this)
+                .show(parentFragmentManager, "DatePicker")
+        }
+
         return binding.root
     }
 
-    fun spinnerCategoria(listCategoria: List<Categoria>?){
-        if (listCategoria != null){
+    fun spinnerCategoria(listCategoria: List<Categoria>?) {
+        if (listCategoria != null) {
             binding.spinnerCategoria.adapter =
                 ArrayAdapter(
                     requireContext(),
@@ -57,5 +64,9 @@ class FormFragment : Fragment() {
                     listCategoria
                 )
         }
+    }
+
+    override fun onDateSelected(date: LocalDate) {
+        mainViewModel.dataSelecionada.value = date
     }
 }
