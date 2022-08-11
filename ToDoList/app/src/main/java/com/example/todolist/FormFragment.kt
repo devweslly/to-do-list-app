@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.fragment.app.activityViewModels
@@ -22,6 +23,7 @@ class FormFragment : Fragment(), TimerPickerListener {
 
     private lateinit var binding: FragmentFormBinding
     private val mainViewModel: MainViewModel by activityViewModels()
+    private var categoriaSelecionada = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +65,25 @@ class FormFragment : Fragment(), TimerPickerListener {
                     androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                     listCategoria
                 )
+
+            binding.spinnerCategoria.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val selected = binding.spinnerCategoria.selectedItem as Categoria
+
+                        categoriaSelecionada = selected.id
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
         }
     }
 

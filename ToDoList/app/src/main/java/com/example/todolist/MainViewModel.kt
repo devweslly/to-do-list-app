@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.todolist.api.Repository
 import com.example.todolist.model.Categoria
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.time.LocalDate
@@ -31,7 +32,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun listCategoria() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.listCategoria()
                 _myCategoriaResponse.value = response
