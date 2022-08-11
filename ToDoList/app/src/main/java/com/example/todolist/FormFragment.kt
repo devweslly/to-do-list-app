@@ -14,6 +14,7 @@ import com.example.todolist.databinding.FragmentFormBinding
 import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.model.Categoria
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.LocalDate
 
 class FormFragment : Fragment() {
 
@@ -29,9 +30,15 @@ class FormFragment : Fragment() {
 
         mainViewModel.listCategoria()
 
+        mainViewModel.dataSelecionada.value = LocalDate.now()
+
         mainViewModel.myCategoriaResponse.observe(viewLifecycleOwner){
             response -> Log.d("Requisicao", response.body().toString())
             spinnerCategoria(response.body())
+        }
+
+        mainViewModel.dataSelecionada.observe(viewLifecycleOwner){
+            selectedDate -> binding.editData.setText(selectedDate.toString())
         }
 
         binding.buttonSalvar.setOnClickListener {
