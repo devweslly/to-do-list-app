@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todolist.databinding.FragmentFormBinding
@@ -16,6 +17,7 @@ import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.fragmet.DatePickerFragment
 import com.example.todolist.fragmet.TimerPickerListener
 import com.example.todolist.model.Categoria
+import com.example.todolist.model.Tarefa
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
 
@@ -46,7 +48,7 @@ class FormFragment : Fragment(), TimerPickerListener {
         }
 
         binding.buttonSalvar.setOnClickListener {
-            findNavController().navigate(R.id.action_formFragment_to_listFragment)
+            inserirNoBanco()
         }
 
         binding.editData.setOnClickListener {
@@ -67,7 +69,7 @@ class FormFragment : Fragment(), TimerPickerListener {
                 )
 
             binding.spinnerCategoria.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener{
+                object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
                         view: View?,
@@ -84,6 +86,32 @@ class FormFragment : Fragment(), TimerPickerListener {
                     }
 
                 }
+        }
+    }
+
+    private fun validarCampos(nome: String, descricao: String, responsavel: String): Boolean {
+        return !(
+                (nome == "" || nome.length < 3 || nome.length > 20) ||
+                        (descricao == "" || descricao.length < 3 || descricao.length > 200) ||
+                        (responsavel == "" || responsavel.length < 3 || responsavel.length > 20)
+                )
+    }
+
+    private fun inserirNoBanco() {
+        val nome = binding.editNome.text.toString()
+        val desc = binding.editDescricao.text.toString()
+        val resp = binding.editResponsavel.text.toString()
+        val data = binding.editData.text.toString()
+        val status = binding.switchAtivoCard.isChecked
+        val categoria = Categoria(categoriaSelecionada, null, null)
+
+        if (validarCampos(nome, desc, resp)) {
+            val tarefa = Tarefa(0, nome, desc, resp, data, status, categoria)
+            mainViewModel.addTarefa(tarefa)
+            Toast.makeText(context, "Tarefa Criada!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_formFragment_to_listFragment)
+        } else {
+            Toast.makeText(context, "Verifique os Campos!", Toast.LENGTH_SHORT).show()
         }
     }
 

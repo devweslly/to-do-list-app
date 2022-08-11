@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository
-        ) : ViewModel() {
+) : ViewModel() {
 
     private val _myCategoriaResponse =
         MutableLiveData<Response<List<Categoria>>>()
@@ -33,21 +33,21 @@ class MainViewModel @Inject constructor(
     }
 
     fun listCategoria() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             try {
                 val response = repository.listCategoria()
                 _myCategoriaResponse.value = response
             } catch (e: Exception) {
-                    Log.d("Erro", e.message.toString())
+                Log.d("Erro", e.message.toString())
             }
         }
     }
 
-    fun addTarefa(tarefa: Tarefa){
+    fun addTarefa(tarefa: Tarefa) {
         viewModelScope.launch {
             try {
                 repository.addTarefa(tarefa)
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d("Erro", e.message.toString())
             }
         }

@@ -6,11 +6,11 @@ import retrofit2.Response
 
 class Repository {
 
-    suspend fun listCategoria(): Response<List<Categoria>>{
+    suspend fun listCategoria(): Response<List<Categoria>> {
         return RetrofitInstance.api.listCategoria()
     }
 
-    suspend fun addTarefa(tarefa: Tarefa): Response<Tarefa>{
+    suspend fun addTarefa(tarefa: Tarefa): Response<Tarefa> {
         return RetrofitInstance.api.addTarefa(tarefa)
     }
 
