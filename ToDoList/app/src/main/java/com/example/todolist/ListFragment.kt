@@ -34,6 +34,7 @@ class ListFragment : Fragment(), TaskClickListener {
         binding.recyclerTarefa.setHasFixedSize(true)
 
         binding.floatingAdd.setOnClickListener {
+            mainViewModel.tarefaSelecionada = null
             findNavController().navigate(R.id.action_listFragment_to_formFragment)
         }
 

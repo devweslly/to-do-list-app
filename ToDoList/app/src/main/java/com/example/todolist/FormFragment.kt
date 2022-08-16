@@ -107,11 +107,20 @@ class FormFragment : Fragment(), TimerPickerListener {
         val data = binding.editData.text.toString()
         val status = binding.switchAtivoCard.isChecked
         val categoria = Categoria(categoriaSelecionada, null, null)
+        Log.d("categoria", categoria.id.toString())
 
         if (validarCampos(nome, desc, resp)) {
-            val tarefa = Tarefa(0, nome, desc, resp, data, status, categoria)
-            mainViewModel.addTarefa(tarefa)
-            Toast.makeText(context, "Tarefa Criada!", Toast.LENGTH_SHORT).show()
+            val salvar: String
+            if(tarefaSelecionada != null){
+                salvar = "Tarefa Atualizada!"
+                val tarefa = Tarefa(tarefaSelecionada?.id!!, nome, desc, resp, data, status, categoria)
+                mainViewModel.addTarefa(tarefa)
+            }else{
+                salvar = "Tarefa Criada!"
+                val tarefa = Tarefa(0, nome, desc, resp, data, status, categoria)
+                mainViewModel.addTarefa(tarefa)
+            }
+            Toast.makeText(context, salvar, Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_formFragment_to_listFragment)
         } else {
             Toast.makeText(context, "Verifique os Campos!", Toast.LENGTH_SHORT).show()

@@ -41,6 +41,12 @@ class TarefaAdapter(
         holder.itemView.setOnClickListener {
             taskClickListener.onTaskClickListener(tarefa)
         }
+
+        holder.binding.switchAtivo
+            .setOnCheckedChangeListener { compoundButton, ativo ->
+                tarefa.status = ativo
+                mainViewModel.updateTarefa(tarefa)
+            }
     }
 
     // Retorna a quantidade de vezes que precisa gerar os itens
@@ -51,7 +57,7 @@ class TarefaAdapter(
     // Método para setar a lista
     fun setList(list: List<Tarefa>){
         // Trocando o conteúdo da lista vazia pela nova lista que vamos trazer externamente
-        listTarefa = list
+        listTarefa = list.sortedByDescending { it.id }
         // Fazendo que a lista seja atualizada, atualizando os itens do RecyclerView
         notifyDataSetChanged()
     }
