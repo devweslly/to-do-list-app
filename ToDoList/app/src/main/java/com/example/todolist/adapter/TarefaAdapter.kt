@@ -3,10 +3,14 @@ package com.example.todolist.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.MainViewModel
 import com.example.todolist.databinding.CardLayoutBinding
 import com.example.todolist.model.Tarefa
 
-class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
+class TarefaAdapter(
+    val taskClickListener: TaskClickListener,
+    val mainViewModel: MainViewModel
+) : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
 
     private var listTarefa = emptyList<Tarefa>()
 
@@ -32,6 +36,11 @@ class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
         holder.binding.textData.text = tarefa.data
         holder.binding.switchAtivo.isChecked = tarefa.status
         holder.binding.textCategoria.text = tarefa.categoria.descricao
+
+        // Clicando em um item da lista
+        holder.itemView.setOnClickListener {
+            taskClickListener.onTaskClickListener(tarefa)
+        }
     }
 
     // Retorna a quantidade de vezes que precisa gerar os itens
