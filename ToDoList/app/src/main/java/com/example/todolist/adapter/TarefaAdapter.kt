@@ -47,6 +47,10 @@ class TarefaAdapter(
                 tarefa.status = ativo
                 mainViewModel.updateTarefa(tarefa)
             }
+
+        holder.binding.buttonDeletar.setOnClickListener {
+            mainViewModel.deleteTarefa(tarefa.id)
+        }
     }
 
     // Retorna a quantidade de vezes que precisa gerar os itens
